@@ -16,5 +16,9 @@
     "request": "^2.72.0",
     "rss-feed-emitter": "^1.0.7",
     "twitter-node-client": "0.0.6"
+  },
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "chai-http": "^3.0.0"
   }
 }
