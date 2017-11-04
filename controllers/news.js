@@ -7,7 +7,6 @@ var twitter = new Twitter(variables.twitterConfig);
 
 var feeder = InitializeFeeder(new RssFeedEmitter(), variables.feeds);
 
-
 function InitializeFeeder(feeder, feeds) {
     for (var i = 0; i < feeds.length; i++) {
         feeder.add(variables.feeds[i]);
