@@ -6,25 +6,22 @@ var RssFeedEmitter = require('rss-feed-emitter');
 var twitter = new Twitter(variables.twitterConfig);
 
 var feeder = InitializeFeeder(new RssFeedEmitter(), variables.feeds);
-
+feeder.on('new-item', function (item) {
+    // console.log(item.meta.title);
+    console.log('=================================================');
+    console.log(new Date(Date.now()));
+    console.log(item.title);
+    console.log(item.description);
+    console.log(item.link);
+    let name = item.link.split('/').slice(-1)[0];
+    console.log(name);
+    checkIfExist(name, item, item.meta.title.replace(/[\. ,:-]+/g, ''));
+});
 
 function InitializeFeeder(feeder, feeds) {
     for (var i = 0; i < feeds.length; i++) {
         feeder.add(variables.feeds[i]);
     }
-
-    feeder.on('new-item', function (item) {
-        // console.log(item.meta.title);
-        console.log('=================================================');
-        console.log(new Date(Date.now()));
-        console.log(item.title);
-        console.log(item.description);
-        console.log(item.link);
-        let name = item.link.split('/').slice(-1)[0];
-        console.log(name);
-        checkIfExist(name, item, item.meta.title.replace(/[\. ,:-]+/g, ''));
-    });
-
     return feeder;
 }
 
