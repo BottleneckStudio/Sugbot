@@ -1,18 +1,9 @@
 var models = (function(){
 
     const feeds = [
-        {
-            url: 'http://www.sunstar.com.ph/rss/cebu',
-            refresh: 2000
-        },
-        {
-            url: 'http://cebudailynews.inquirer.net/feed',
-            refresh: 2000
-        },
-        {
-            url: 'http://www.philstar.com/rss/cebu-news',
-            refresh: 2000
-        }
+        {   url: 'http://www.sunstar.com.ph/rss/cebu'   },
+        {   url: 'http://cebudailynews.inquirer.net/feed'   },
+        {   url: 'http://www.philstar.com/rss/cebu-news'    }
     ];
 
     const twitterConfig = {

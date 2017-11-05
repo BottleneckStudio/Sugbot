@@ -7,7 +7,6 @@ var twitter = new Twitter(variables.twitterConfig);
 
 var feeder = InitializeFeeder(new RssFeedEmitter(), variables.feeds);
 
-
 function InitializeFeeder(feeder, feeds) {
     for (var i = 0; i < feeds.length; i++) {
         feeder.add(variables.feeds[i]);
@@ -21,8 +20,9 @@ function InitializeFeeder(feeder, feeds) {
         console.log(item.description);
         console.log(item.link);
         let name = item.link.split('/').slice(-1)[0];
+        let newspaper = item.meta.title.replace(/[\. ,:-]+/g, '');
         console.log(name);
-        checkIfExist(name, item, item.meta.title.replace(/[\. ,:-]+/g, ''));
+        checkIfExist(name, item, newspaper);
     });
 
     return feeder;
@@ -37,8 +37,8 @@ function checkIfExist(name, item, newspaper) {
     request(options, function (error, response, body) {
         // console.log(body);
         if (JSON.parse(body) == null) {
-            // Send Tweet if not found in Firebase    
-            sendTweet(name, item, newspaper);
+            // Insert to Firebase if not found
+            sendPutRequest(name, item, newspaper);
         }
     });
 }
@@ -52,8 +52,6 @@ function sendTweet(name, item, newspaper) {
         },
         function () {
             console.log("Success!");
-            // Insert to Firebase if successful
-            sendPutRequest(name, item, newspaper);
         });
 }
 
@@ -71,6 +69,10 @@ function sendPutRequest(name, item, newspaper) {
     };
 
     request(options, function (error, response, body) {
-        // DO SOMETHING
+        var res = JSON.parse(body);
+        if (res != null) {
+            // Send Tweet if Put Request was successful    
+            sendTweet(name, item, newspaper);
+        }
     });
 }
